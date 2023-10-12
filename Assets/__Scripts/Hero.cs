@@ -8,6 +8,8 @@ public class Hero : MonoBehaviour {
     [Header("Set in Inspector")]
     // These fields control the movement of the ship
     public float speed = 30;
+    public float boost = 60;
+    private float currentSpeed;
     public float rollMult = -45;
     public float pitchMult = 30;
     public float gameRestartDelay = 2f;
@@ -53,10 +55,19 @@ public class Hero : MonoBehaviour {
 
         // Change transform.position based on the axes
         Vector3 pos = transform.position;
-        pos.x += xAxis * speed * Time.deltaTime;
-        pos.y += yAxis * speed * Time.deltaTime;
+        pos.x += xAxis * currentSpeed * Time.deltaTime;
+        pos.y += yAxis * currentSpeed * Time.deltaTime;
         transform.position = pos;
 
+
+        //read the boost key
+        //set the current speed to boost if pressed
+        //or to regular speed if not pressed
+
+        if (Input.GetAxis("Boost") == 1 )
+        {
+            
+        }
         // Rotate the ship to make it feel more dynamic
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
 
@@ -136,7 +147,7 @@ public class Hero : MonoBehaviour {
         }
         set
         {
-            _shieldLevel = Mathf.Min(value, 4);
+            _shieldLevel = Mathf.Min(value, 6);
             // If the shield is going to be set to less than zero
             if (value < 0)
             {
